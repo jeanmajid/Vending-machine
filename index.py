@@ -57,34 +57,34 @@ displayLen = 0
 delay = 0.1 # wie schnell die buchstaben erscheinen sollen
 
 def moveCoil(motorNumber):
-    start_time = time()
-    spin = True
-    if motorNumber == 1:
-        motorPins = motorPins1
-    if motorNumber == 2:
-        motorPins = motorPins2
+    start_time = time() # Die lokale zeit des esp32 in der variable start_time speichern
+    if motorNumber == 1: # Wenn die, mit der gerufenen motorNummer, 1 ist
+        motorPins = motorPins1 # Die motorPins variable auf die Motor pins für den ersten Motor setzten
+    if motorNumber == 2: # Wenn die, mit der gerufenen motorNummer, 2 ist
+        motorPins = motorPins2 # Die motorPins variable auf die Motor pins für den zweiten Motor setzten
+    spin = True # Spin auf True setzten um den While spin loop zu starten
 
     while spin:
         for step in motorSequence:
             for i in range(len(motorPins)):
                 motorPins[i].value(step[i])
                 sleep(0.001)  # Maximum speed. sleep > 0.001 does not work
-        if time() - start_time >= 3: # Gibt an wie lange sich der Motor dreht in sekunden
-            spin = False
+        if time() - start_time >= 3: # Gibt an wie lange sich der Motor dreht in sekunden wenn jetztige zeit - zeit zum startpunkt grösser als 3 ist
+            spin = False # While loop stoppen
 
 def clearTopRow(lcd):
-    lcd.move_to(0,0)
-    lcd.putstr("                ")
-    lcd.move_to(0,0)
+    lcd.move_to(0,0) # Cursor auf die start position setzten
+    lcd.putstr("                ") # Ein leeren 16 zeiligen string printen um die reihe zu clearen
+    lcd.move_to(0,0) # Cursor auf die start position setzten
 
 def motion_det():
-    global lastDetect
-    if PirSensor.value() == 1 and lastDetect == False:  
-        lastDetect = True
-        return True
-    if PirSensor.value() == 0 and lastDetect == True:
-        lastDetect = False
-        return False
+    global lastDetect # Die globale variable lastDetect benutzten
+    if PirSensor.value() == 1 and lastDetect == False: # wenn der sensor was erkennt ( hight gestellt ist )
+        lastDetect = True # Die variable lastDetect auf True setzten damit der sensor nur noch low detecten kann
+        return True # True returnen
+    if PirSensor.value() == 0 and lastDetect == True: # wenn der sensor nichts erkennt ( low gestellt ist )
+        lastDetect = False # Die variable lastDetect auf False setzten damit der sensor nur noch high detecten kann
+        return False # False returnen
 
 def numpad_detection():
     global rows # Die globale variable rows beuntzten

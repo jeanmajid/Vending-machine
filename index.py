@@ -87,22 +87,22 @@ def motion_det():
         return False
 
 def numpad_detection():
-    global rows
-    global cols
-    global onePressed
-    global twoPressed
-    for i, row_pin in enumerate(rows):
-        row_pin.value(0)
-        for j, col_pin in enumerate(cols):
-            if not col_pin.value():
-                key = keys.get((i, j), None)
-                if cash > 0:
-                    if key == "1":
-                        onePressed = True
-                    if key == "2":
-                        twoPressed = True             
-                sleep(1)
-        row_pin.value(1)
+    global rows # Die globale variable rows beuntzten
+    global cols # Die globale variable cols bentzten
+    global onePressed # Die globale variable onePressed bentzten
+    global twoPressed # Die globale variable twoPressed benutzten
+    for i, row_pin in enumerate(rows): # Ein for loop gestartet wo durch alle pins dem rows array geloopt wird mit deren index nummer i
+        row_pin.value(0) # setzt alle pins in dem rows array zu low
+        for j, col_pin in enumerate(cols): # Hier ist noch ein for loop in einem for loop dies nennt man nested loops. in diesem loop werden durch alle colum pins geloopt mit deren index wert
+            if not col_pin.value(): # Kukt ob der colum pin nicht den wert 1 hat also 0 (low) und dann wurde erkannt das dieser knopf gedrückt wurde
+                key = keys.get((i, j), None) # aus dem keys array werden jetzt der knopf mit den werten i und j gesucht welches die index werte für unser row und colum sind. wenn keins gefunden wurde dann gibt er None aus
+                if cash > 0: # Kuken ob der benutzter mehr als 0 cash (Geld) hat
+                    if key == "1": # Wenn der gedrückte key 1 ist
+                        onePressed = True # Die globale variable onePressed wird auf True gesetzt
+                    if key == "2": # Wenn der gedrückte key 2 ist
+                        twoPressed = True # Die globale variable twoPressed wird auf True gesetzt            
+                sleep(1) # sleep
+        row_pin.value(1) # Diese linie gehört nicht mehr zum if und hat die aufgabe den row pin auf high zu stellen damit der nächste Pin kontroliert werden kann
 
 def lcd_if_cash():
     global last_lcd_state # Die globale variable last_lcd_state benutzten
@@ -130,16 +130,16 @@ def lcd_if_cash():
             clearTopRow(lcd) # clearTopRow funktion rufen welche die obere reihe leer macht
 
 def lcd_default():
-    global last_lcd_state
-    if last_lcd_state == 1:
-        lcd.clear()
-        last_lcd_state = 0
-    lcd.putstr("Waehl ein " + "      "+ "Produkt")
-    lcd.clear()
-    sleep(1)
-    lcd.putstr("Wirf eine Münze ein")
-    sleep(1)
-    lcd.clear()
+    global last_lcd_state # Die globale variable last_lcd_state benutzten
+    if last_lcd_state == 1: # Kuken ob der lcd screen zuletzt den status 1 (if_cash) hatte um zu kuken ob er ressetet werden muss
+        lcd.clear() # LCD screen clearen
+        last_lcd_state = 0 # Die globale variable auf 0 setzten um zu signalieseiren das der screen gearde im default mode ist
+    lcd.putstr("Waehl ein " + "      "+ "Produkt") # Auf den LCD printen das der user sich das der user ein Produkt wählen soll
+    lcd.clear() # LCD screen clearen
+    sleep(1) # sleep
+    lcd.putstr("Wirf eine Münze ein") # Auf dem LCD printen das der user eine münze einwerfen soll
+    sleep(1) # sleep
+    lcd.clear() # Lcd screen clearen
 ready = True
 while ready:
     if (motion_det()):

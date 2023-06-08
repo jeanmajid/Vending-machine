@@ -64,10 +64,10 @@ def moveCoil(motorNumber):
         motorPins = motorPins2 # Die motorPins variable auf die Motor pins für den zweiten Motor setzten
     spin = True # Spin auf True setzten um den While spin loop zu starten
 
-    while spin:
-        for step in motorSequence:
-            for i in range(len(motorPins)):
-                motorPins[i].value(step[i])
+    while spin: # While Loop, welche den Motor in Bewegung setzt
+        for step in motorSequence: # For Loop für step in der Liste motorSequence
+            for i in range(len(motorPins)): # For Loop in der range von der länge des motorPins arrays, i = (0, 3)
+                motorPins[i].value(step[i]) # Der ausgewählte motorPin wird auf den value, des sequence arrays, objectes gestellt
                 sleep(0.001)  # Maximum speed. sleep > 0.001 does not work
         if time() - start_time >= 3: # Gibt an wie lange sich der Motor dreht in sekunden wenn jetztige zeit - zeit zum startpunkt grösser als 3 ist
             spin = False # While loop stoppen

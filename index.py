@@ -3,17 +3,17 @@ from machine import Pin, I2C
 from lcd_api import LcdApi
 from i2c_lcd import I2cLcd
 from time import sleep,time
-ready = False
+ready = False # Die ready variable die False ist
 # Lcd screen initzialiesieren
-I2C_ADDR = 0x27
-totalRows = 2
-totalColumns = 16
+I2C_ADDR = 0x27 # Die addresse des LCD Bildschirms
+totalRows = 2 # Die anzahl der rows
+totalColumns = 16 # Die länge der rows
 
-i2c = I2C(scl=Pin(22), sda=Pin(21), freq=10000)
-lcd = I2cLcd(i2c, I2C_ADDR, totalRows, totalColumns)
+i2c = I2C(scl=Pin(22), sda=Pin(21), freq=10000) # Definieren des LCD Displays mit den Pins und der frequenz
+lcd = I2cLcd(i2c, I2C_ADDR, totalRows, totalColumns) # Definieren des LCD Displays mit der hex addresse und dem Rows und Colums
 # Numpad initzialisieren
-rows = [Pin(4), Pin(5), Pin(12), Pin(18)]
-cols = [Pin(16), Pin(19), Pin(17), Pin(0)]
+rows = [Pin(4), Pin(5), Pin(12), Pin(18)] # Die rows vom Numpad in einem array
+cols = [Pin(16), Pin(19), Pin(17), Pin(0)] # Die colums vom Numpad in einem array
 
 keys = {
     (0, 0): 'D',
@@ -32,30 +32,30 @@ keys = {
     (3, 1): '7',
     (3, 2): '4',
     (3, 3): '1',
-}
+} # Keys tuple der alle key combis speichert (wie ein koordinatensystem)
 
-for row_pin in rows:
-    row_pin.init(mode=Pin.OUT)
-for col_pin in cols:
-    col_pin.init(mode=Pin.IN, pull=Pin.PULL_UP)
+for row_pin in rows: # Für jeden pin in dem rows array
+    row_pin.init(mode=Pin.OUT) # Den Pin auf Output setzten
+for col_pin in cols: # Für jeden pin in dem cols array
+    col_pin.init(mode=Pin.IN, pull=Pin.PULL_UP) # Den pin auf input setzten mit pull_up (keine ahnung was das ist)
 #sensor
-PirSensor = Pin(23, Pin.IN)
+PirSensor = Pin(23, Pin.IN) # Der Sensor der als input pin definiert wird
 #Motor
-motorSequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],]
-motorPins1 = [Pin(2,Pin.OUT), Pin(15,Pin.OUT), Pin(27,Pin.OUT), Pin(25,Pin.OUT)]
-motorPins2 = [Pin(26,Pin.OUT), Pin(33,Pin.OUT), Pin(14,Pin.OUT), Pin(13,Pin.OUT)]
+motorSequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],] # Die sequenz wegen dem Motor
+motorPins1 = [Pin(2,Pin.OUT), Pin(15,Pin.OUT), Pin(27,Pin.OUT), Pin(25,Pin.OUT)] # Die pins für den 1ten Motor
+motorPins2 = [Pin(26,Pin.OUT), Pin(33,Pin.OUT), Pin(14,Pin.OUT), Pin(13,Pin.OUT)] # Die pins für den 2ten Motor
 #Variablen
-onePressed = False
-twoPressed = False
-cash = 0
-last_lcd_state = 0
-lastDetect = False
-
-text = "Bitte waehle ein Produkt"
-length = totalColumns - 1
-displayLen = 0
+onePressed = False # Die variable die anzeigt ob eins auf dem numpad gedrückt wurde
+twoPressed = False # Die variable die anzeigt ob zwei auf dem numpad gedrückt wurde
+cash = 0 # Die variable die anzeigt wie viel guthaben der user hat
+last_lcd_state = 0 # Die variable die dem code sagt welchen status der LCD zuletzt hatte
+lastDetect = False # Die variable die anzeigt was als letztes vom sensor erkannt wurde
+#LCD if_cash variablen
+text = "Bitte waehle ein Produkt" # Der text der angezeigt wird während
+length = totalColumns - 1 # Die variable die anzeigt wie lange der text in der oberen zeile sein darf
+displayLen = 0 # Variable um die länge der oberen reihe anzuzeigen
 delay = 0.1 # wie schnell die buchstaben erscheinen sollen
-
+#Funktionen
 def moveCoil(motorNumber):
     start_time = time() # Die lokale zeit des esp32 in der variable start_time speichern
     if motorNumber == 1: # Wenn die, mit der gerufenen motorNummer, 1 ist
@@ -140,7 +140,7 @@ def lcd_default():
     lcd.putstr("Wirf eine Münze ein") # Auf dem LCD printen das der user eine münze einwerfen soll
     sleep(1) # sleep
     lcd.clear() # Lcd screen clearen
-ready = True
+ready = True # ready wird auf True gesetzt um zu signalisieren das der code bereit ist den main loop zu gehen
 while ready:
     if (motion_det()):
         cash += 1

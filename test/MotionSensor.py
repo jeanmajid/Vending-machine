@@ -1,8 +1,7 @@
 from machine import Pin 
 import time
 
-led = Pin(21, Pin.OUT) 
-PirSensor = Pin(21, Pin.IN)
+PirSensor = Pin(23, Pin.IN)
 lastDetect = False
 
 def motion_det(): 

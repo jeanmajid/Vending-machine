@@ -6,13 +6,11 @@ lastDetect = False
 
 def motion_det(): 
     if PirSensor.value() == 1 and lastDetect == False:
-        print("motion detected")
         lastDetect = True
-        time.sleep(0.5) 
+        return True
     if PirSensor.value() == 0 and lastDetect == True:
-        print("no motion")
         lastDetect = False
-        time.sleep(0.5)
+        return False
 
 while True:
     motion_det()

@@ -1,17 +1,22 @@
 from machine import Pin
-from time import sleep
+from time import sleep, time
 
-IN1 = Pin(2,Pin.OUT)
-IN2 = Pin(15,Pin.OUT)
-IN3 = Pin(27,Pin.OUT)
-IN4 = Pin(25,Pin.OUT)
+motorSequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],]
+motorPins1 = [Pin(2,Pin.OUT), Pin(15,Pin.OUT), Pin(27,Pin.OUT), Pin(25,Pin.OUT)]
+motorPins2 = [Pin(26,Pin.OUT), Pin(33,Pin.OUT), Pin(14,Pin.OUT), Pin(13,Pin.OUT)]
 
-pins = [IN1, IN2, IN3, IN4]
+def moveCoil(motorNumber):
+    start_time = time()
+    if motorNumber == 1:
+        motorPins = motorPins1
+    if motorNumber == 2:
+        motorPins = motorPins2
+    spin = True
 
-sequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],]
-
-while True:
-    for step in sequence:
-        for i in range(len(pins)):
-            pins[i].value(step[i])
-            sleep(0.001) # maximale Geschwindigkeit. sleep > 0.001 funktioniert nicht
+    while spin:
+        for step in motorSequence:
+            for i in range(len(motorPins)):
+                motorPins[i].value(step[i])
+                sleep(0.001)
+        if time() - start_time >= 3:
+            spin = False 

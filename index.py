@@ -1,6 +1,5 @@
-
-from machine import Pin, I2C
-from lcd_api import LcdApi
+from machine import Pin, I2C # Vo machine Pin und I2C importieren
+from lcd_api import LcdApi # Von der lcd_api datei 
 from i2c_lcd import I2cLcd
 from time import sleep,time
 ready = False # Die ready variable die False ist
@@ -141,9 +140,9 @@ def lcd_default():
     sleep(1) # sleep
     lcd.clear() # Lcd screen clearen
 ready = True # ready wird auf True gesetzt um zu signalisieren das der code bereit ist den main loop zu gehen
-while ready:
-    if (motion_det()):
-        cash += 1
+while ready: # Wenn ready True
+    if (motion_det()): # Wenn Motion detection true returned
+        cash += 1 # Cash 1 hoch setzten
     numpad_detection()
     if cash > 0:
         lcd_if_cash()

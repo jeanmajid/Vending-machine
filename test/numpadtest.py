@@ -22,13 +22,24 @@ keys = {
     (3, 2): '4',
     (3, 3): '1',
 }
-
-while True:
+for row_pin in rows: # Für jeden pin in dem rows array
+    row_pin.init(mode=Pin.OUT) # Den Pin auf Output setzten
+for col_pin in cols: # Für jeden pin in dem cols array
+    col_pin.init(mode=Pin.IN, pull=Pin.PULL_UP) # Den pin auf input setzten mit pull_up (keine ahnung was das ist)
+def numpad_detection():
+    global rows
+    global cols
+    global onePressed
+    global twoPressed
     for i, row_pin in enumerate(rows):
         row_pin.value(0)
         for j, col_pin in enumerate(cols):
             if not col_pin.value():
                 key = keys.get((i, j), None)
-                print(key)
+                if cash > 0:
+                    if key == "1":
+                        onePressed = True
+                    if key == "2":
+                        twoPressed = True       
                 sleep(1)
         row_pin.value(1)

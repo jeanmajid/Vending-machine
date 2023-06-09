@@ -90,9 +90,9 @@ def numpad_detection():
     global cols # Die globale variable cols bentzten
     global onePressed # Die globale variable onePressed bentzten
     global twoPressed # Die globale variable twoPressed benutzten
-    for i, row_pin in enumerate(rows): # Ein for loop gestartet wo durch alle pins dem rows array geloopt wird mit deren index nummer i
-        row_pin.value(0) # setzt alle pins in dem rows array zu low
-        for j, col_pin in enumerate(cols): # Hier ist noch ein for loop in einem for loop dies nennt man nested loops. in diesem loop werden durch alle colum pins geloopt mit deren index wert
+    for i, row_pin in enumerate(rows): # Ein for loop gestartet wo durch alle pins dem rows array geloopt wird mit deren index nummer der in i gespeichert wird
+        row_pin.value(0) # setzt alle pins in dem rows array zu low damit sie zur überprüfung freigegeben werden
+        for j, col_pin in enumerate(cols): # Hier ist noch ein for loop in einem for loop dies nennt man nested loops. in diesem loop werden durch alle colum pins geloopt mit deren index wert der in j gespeichert wird
             if not col_pin.value(): # Kukt ob der colum pin nicht den wert 1 hat also 0 (low) und dann wurde erkannt das dieser knopf gedrückt wurde
                 key = keys.get((i, j), None) # aus dem keys array werden jetzt der knopf mit den werten i und j gesucht welches die index werte für unser row und colum sind. wenn keins gefunden wurde dann gibt er None aus
                 if cash > 0: # Kuken ob der benutzter mehr als 0 cash (Geld) hat
@@ -101,7 +101,7 @@ def numpad_detection():
                     if key == "2": # Wenn der gedrückte key 2 ist
                         twoPressed = True # Die globale variable twoPressed wird auf True gesetzt            
                 sleep(1) # sleep
-        row_pin.value(1) # Diese linie gehört nicht mehr zum if und hat die aufgabe den row pin auf high zu stellen damit der nächste Pin kontroliert werden kann
+        row_pin.value(1) # Diese linie gehört nicht mehr zum if und hat die aufgabe den row pin auf high zu stellen damit die nächste row kontroliert werden kann
 
 def lcd_if_cash():
     global last_lcd_state # Die globale variable last_lcd_state benutzten

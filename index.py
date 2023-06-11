@@ -40,8 +40,7 @@ for col_pin in cols: # Für jeden pin in dem cols array
 #sensor
 PirSensor = Pin(23, Pin.IN) # Der Sensor der als input pin definiert wird
 #Motor
-motorSequence1 = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],] # Die sequenz wegen dem Motor
-motorSequence2 = [[1,0,0,1],[0,0,1,1],[0,0,1,0],[0,1,1,0],[0,1,0,0],[1,1,0,0],[1,0,0,0],]
+motorSequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],] # Die sequenz wegen dem Motor
 motorPins1 = [Pin(2,Pin.OUT), Pin(15,Pin.OUT), Pin(27,Pin.OUT), Pin(25,Pin.OUT)] # Die pins für den 1ten Motor
 motorPins2 = [Pin(26,Pin.OUT), Pin(33,Pin.OUT), Pin(14,Pin.OUT), Pin(13,Pin.OUT)] # Die pins für den 2ten Motor
 #Variablen
@@ -60,10 +59,8 @@ def moveCoil(motorNumber):
     start_time = time() # Die lokale zeit des esp32 in der variable start_time speichern
     if motorNumber == 1: # Wenn die, mit der gerufenen motorNummer, 1 ist
         motorPins = motorPins1 # Die motorPins variable auf die Motor pins für den ersten Motor setzten
-        motorSequence = motorSequence1
     if motorNumber == 2: # Wenn die, mit der gerufenen motorNummer, 2 ist
         motorPins = motorPins2 # Die motorPins variable auf die Motor pins für den zweiten Motor setzten
-        motorSequence = motorSequence2
     spin = True # Spin auf True setzten um den While spin loop zu starten
 
     while spin: # While Loop, welche den Motor in Bewegung setzt

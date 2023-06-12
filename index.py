@@ -40,7 +40,7 @@ for col_pin in cols: # Für jeden pin in dem cols array
 #sensor
 PirSensor = Pin(23, Pin.IN) # Der Sensor der als input pin definiert wird
 #Motor
-motorSequence = [[1,0,0,0],[1,1,0,0],[0,1,0,0],[0,1,1,0],[0,0,1,0],[0,0,1,1],[1,0,0,1],] # Die sequenz wegen dem Motor
+motorSequence = [[1,0,0,1],[0,0,1,1],[0,0,1,0],[0,1,1,0],[0,1,0,0],[1,1,0,0],[1,0,0,0],] # Die sequenz wegen dem Motor
 motorPins1 = [Pin(2,Pin.OUT), Pin(15,Pin.OUT), Pin(27,Pin.OUT), Pin(25,Pin.OUT)] # Die pins für den 1ten Motor
 motorPins2 = [Pin(26,Pin.OUT), Pin(33,Pin.OUT), Pin(14,Pin.OUT), Pin(13,Pin.OUT)] # Die pins für den 2ten Motor
 #Variablen
@@ -68,7 +68,7 @@ def moveCoil(motorNumber):
             for i in range(len(motorPins)): # For Loop in der range von der länge des motorPins arrays, i = (0, 3)
                 motorPins[i].value(step[i]) # Der ausgewählte motorPin wird auf den value, des sequence arrays, objectes gestellt
                 sleep(0.001)  # Maximum speed. sleep > 0.001 does not work
-        if time() - start_time >= 3: # Gibt an wie lange sich der Motor dreht in sekunden wenn jetztige zeit - zeit zum startpunkt grösser als 3 ist
+        if time() - start_time >= 20: # Gibt an wie lange sich der Motor dreht in sekunden wenn jetztige zeit - zeit zum startpunkt grösser als 3 ist
             spin = False # While loop stoppen
 
 def clearTopRow(lcd):
